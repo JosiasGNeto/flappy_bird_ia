@@ -71,7 +71,7 @@ class Bird:
             if self.angle > -90:
                 self.angle -= self.ROTATION_SPEED
 
-    def draw(self):
+    def draw(self, screen):
         # set what image we are gonna use 
         self.frames  += 1
 
@@ -87,8 +87,16 @@ class Bird:
             self.image = self.IMAGES[0]
 
         # if bird is falling don't use the wings 
+        if self.angle <= -80:
+            self.image  = self.IMAGES[1]
+            self.frames = self.ANIMATION_TIME*2
 
         # draw image 
+        center_position = self.image.get_rect(topleft = (self.x, self.y)).center
+        rotate_image    = pygame.transform.rotate(self.imagem, self.angle)
+        hitbox          = rotate_image.get_rect(center = center_position)
+
+        screen.blit(rotate_image, hitbox.topleft)
 
 class Pipe:
     pass
